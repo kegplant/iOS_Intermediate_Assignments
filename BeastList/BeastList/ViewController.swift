@@ -17,6 +17,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         tableView.dataSource=self
+        tableView.delegate=self
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -33,7 +34,7 @@ class ViewController: UIViewController {
         tableView.reloadData()
     }
 }
-extension ViewController: UITableViewDataSource{
+extension ViewController: UITableViewDataSource,UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) ->  Int {
         // return an integer that indicates how many rows (cells) to draw
         return tasks.count
@@ -45,5 +46,17 @@ extension ViewController: UITableViewDataSource{
         cell.textLabel?.text=tasks[indexPath.row]
         return cell
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Selection:\(indexPath.section) and Row: \(indexPath.row)")
+        tasks.remove(at: indexPath.row)
+        tableView.reloadData()
+    }
 }
+//extensions ViewController: UITableViewDelegate{ //2 is better encapsulation than 1 extension
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        print("Selection:\(indexPath.section) and Row: \(indexPath.row)")
+//        tasks.remove(at: indexPath.row)
+//        tableView.reloadData()
+//    }
+//}
 
